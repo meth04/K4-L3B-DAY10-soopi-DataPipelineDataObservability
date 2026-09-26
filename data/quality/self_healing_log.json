@@ -1,0 +1,15 @@
+{
+  "healthy_before": false,
+  "repaired": true,
+  "healthy_after": true,
+  "violations": [
+    "ExpectColumnValuesToBeUnique[paper_id]",
+    "ExpectColumnValueLengthsToBeBetween[summary]"
+  ],
+  "repaired_rows": 24,
+  "actions": [
+    "Detected 2 quality violation(s): ExpectColumnValuesToBeUnique[paper_id], ExpectColumnValueLengthsToBeBetween[summary].",
+    "Attempt 1: rebuilt 24 rows from crossref_records.json; post-repair gate success=True.",
+    "Self-healing succeeded; dataset restored to a healthy state."
+  ]
+}

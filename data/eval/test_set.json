@@ -1,0 +1,92 @@
+[
+  {
+    "id": "q01",
+    "question_type": "summary",
+    "question": "What is the summary of the paper 'Continuous Benchmark Evaluation for Enterprise Retrieval Pipelines'?",
+    "ground_truth": "Static benchmarks fail to capture domain drift in enterprise knowledge bases.",
+    "ground_truth_doc_ids": [
+      "10.1145/3637528.3671812"
+    ]
+  },
+  {
+    "id": "q02",
+    "question_type": "summary",
+    "question": "What is the summary of the paper 'Advanced Perspectives on Chunking Strategies for Technical Documentation Retrieval'?",
+    "ground_truth": "An extended empirical study on ierarchical and semantic boundary chunking preserves code block contexts and markdown headings.",
+    "ground_truth_doc_ids": [
+      "10.1145/3637528.3671821"
+    ]
+  },
+  {
+    "id": "q03",
+    "question_type": "summary",
+    "question": "What is the summary of the paper 'Advanced Perspectives on Data Observability and Quality Gates for Production RAG Systems'?",
+    "ground_truth": "An extended empirical study on ilent data corruption in RAG pipelines degrades LLM answer faithfulness without throwing runtime errors.",
+    "ground_truth_doc_ids": [
+      "10.1145/3637528.3671814"
+    ]
+  },
+  {
+    "id": "q04",
+    "question_type": "authors",
+    "question": "Who authored the paper 'Continuous Benchmark Evaluation for Enterprise Retrieval Pipelines'?",
+    "ground_truth": "Quang Le, Yen Vu",
+    "ground_truth_doc_ids": [
+      "10.1145/3637528.3671812"
+    ]
+  },
+  {
+    "id": "q05",
+    "question_type": "authors",
+    "question": "Who authored the paper 'Advanced Perspectives on Chunking Strategies for Technical Documentation Retrieval'?",
+    "ground_truth": "Long Trinh, Ha Chu",
+    "ground_truth_doc_ids": [
+      "10.1145/3637528.3671821"
+    ]
+  },
+  {
+    "id": "q06",
+    "question_type": "authors",
+    "question": "Who authored the paper 'Advanced Perspectives on Data Observability and Quality Gates for Production RAG Systems'?",
+    "ground_truth": "Anh Tran, Quoc Pham",
+    "ground_truth_doc_ids": [
+      "10.1145/3637528.3671814"
+    ]
+  },
+  {
+    "id": "q07",
+    "question_type": "date",
+    "question": "When was the paper 'Continuous Benchmark Evaluation for Enterprise Retrieval Pipelines' published?",
+    "ground_truth": "2026-07-22",
+    "ground_truth_doc_ids": [
+      "10.1145/3637528.3671812"
+    ]
+  },
+  {
+    "id": "q08",
+    "question_type": "date",
+    "question": "When was the paper 'Advanced Perspectives on Semantic Layer Integration for Agentic Text-to-SQL Pipelines' published?",
+    "ground_truth": "2026-06-06",
+    "ground_truth_doc_ids": [
+      "10.1145/3637528.3671818"
+    ]
+  },
+  {
+    "id": "q09",
+    "question_type": "categories",
+    "question": "What categories does the paper 'Continuous Benchmark Evaluation for Enterprise Retrieval Pipelines' belong to?",
+    "ground_truth": "Evaluation Methodology, Enterprise Systems",
+    "ground_truth_doc_ids": [
+      "10.1145/3637528.3671812"
+    ]
+  },
+  {
+    "id": "q10",
+    "question_type": "categories",
+    "question": "What categories does the paper 'Advanced Perspectives on Semantic Layer Integration for Agentic Text-to-SQL Pipelines' belong to?",
+    "ground_truth": "Databases, Information Systems",
+    "ground_truth_doc_ids": [
+      "10.1145/3637528.3671818"
+    ]
+  }
+]

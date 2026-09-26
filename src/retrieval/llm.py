@@ -1,11 +1,28 @@
 from __future__ import annotations
 
 from langchain_anthropic import ChatAnthropic
+from langchain_core.language_models.fake_chat_models import GenericFakeChatModel
+from langchain_core.messages import AIMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_ollama import ChatOllama
 from langchain_openai import ChatOpenAI
 
 from core.config import Settings, normalized_provider, require_llm_credentials
+
+
+class _ToolCapableFakeChatModel(GenericFakeChatModel):
+    """Offline mock that can be driven through langchain's tool-calling agent loop.
+
+    None of langchain_core's bundled fake chat models implement `bind_tools`, so
+    `create_agent` raises NotImplementedError when LLM_PROVIDER=mock. This subclass
+    accepts tool bindings (returning itself) and simply yields canned assistant
+    messages, which is enough to exercise the agent's construction and invoke path
+    without any network access or API key.
+    """
+
+    def bind_tools(self, tools, **kwargs):  # noqa: ANN001, ANN003 - langchain signature
+        return self
+
 
 
 def build_llm(settings: Settings, temperature: float = 0.0):
@@ -51,7 +68,7 @@ def build_llm(settings: Settings, temperature: float = 0.0):
             temperature=temperature,
         )
     if provider == "mock":
-        from langchain_core.language_models.fake_chat_models import FakeListChatModel
-
-        return FakeListChatModel(responses=["This is a mock response from the scholarly corpus."])
+        return _ToolCapableFakeChatModel(
+            messages=iter([AIMessage(content="This is a mock response from the scholarly corpus.")] * 64)
+        )
     raise RuntimeError(f"Unsupported LLM provider: {settings.llm_provider}")

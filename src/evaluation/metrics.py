@@ -45,6 +45,17 @@ def _token_f1(reference: str, prediction: str) -> float:
     return 2 * precision * recall / (precision + recall)
 
 
+def _heuristic_verdict(reference: str, prediction: str) -> JudgeVerdict:
+    """Deterministic offline judge used when no real LLM evaluator is available."""
+    f1 = _token_f1(reference, prediction)
+    score = 5 if f1 >= 0.95 else 3 if f1 >= 0.5 else 1
+    return JudgeVerdict(
+        score=score,
+        correct=score >= 3,
+        reasoning="Fallback heuristic judge used because the LLM evaluator was unavailable.",
+    )
+
+
 def _judge_answer(settings: Settings, question: str, reference: str, prediction: str) -> JudgeVerdict:
     prompt = f"""
 Evaluate the model answer against the reference answer.
@@ -60,14 +71,14 @@ Return:
 """.strip()
     try:
         llm = build_llm(settings=settings, temperature=0.0).with_structured_output(JudgeVerdict)
-        return llm.invoke(prompt)
+        verdict = llm.invoke(prompt)
     except Exception:
-        score = 5 if _token_f1(reference, prediction) >= 0.95 else 3 if _token_f1(reference, prediction) >= 0.5 else 1
-        return JudgeVerdict(
-            score=score,
-            correct=score >= 3,
-            reasoning="Fallback heuristic judge used because the LLM evaluator was unavailable.",
-        )
+        return _heuristic_verdict(reference, prediction)
+    # A provider may return None (or an unparsed payload) instead of raising; never
+    # let that propagate as a missing judge, which would crash the summary below.
+    if not isinstance(verdict, JudgeVerdict):
+        return _heuristic_verdict(reference, prediction)
+    return verdict
 
 
 def _run_ragas(settings: Settings, answers: list[dict[str, Any]]) -> dict[str, Any]:

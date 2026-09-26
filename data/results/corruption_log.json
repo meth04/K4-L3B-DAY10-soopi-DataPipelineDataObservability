@@ -1,0 +1,77 @@
+{
+  "seed": 42,
+  "original_rows": 24,
+  "final_rows": 22,
+  "total_corruptions": 6,
+  "events": [
+    {
+      "type": "drop_latest_records",
+      "description": "Dropped the 5 most recent records (5/24 = 20%).",
+      "affected_rows": 5,
+      "affected_paper_ids": [
+        "10.1145/3637528.3671812",
+        "10.1145/3637528.3671808",
+        "10.1145/3637528.3671804",
+        "10.1145/3637528.3671807",
+        "10.1145/3637528.3671802"
+      ]
+    },
+    {
+      "type": "blank_summary",
+      "description": "Replaced the abstract with an empty string on sampled rows.",
+      "affected_rows": 5,
+      "affected_paper_ids": [
+        "10.1145/3637528.3671821",
+        "10.1145/3637528.3671824",
+        "10.1145/3637528.3671817",
+        "10.1145/3637528.3671818",
+        "10.1145/3637528.3671805"
+      ]
+    },
+    {
+      "type": "inject_noise",
+      "description": "Prepended lorem-ipsum and junk tokens to the abstract.",
+      "affected_rows": 4,
+      "affected_paper_ids": [
+        "10.1145/3637528.3671810",
+        "10.1145/3637528.3671806",
+        "10.1145/3637528.3671822",
+        "10.1145/3637528.3671811"
+      ]
+    },
+    {
+      "type": "truncate_title",
+      "description": "Truncated titles to 7 characters (below the 8-character minimum).",
+      "affected_rows": 4,
+      "affected_paper_ids": [
+        "10.1145/3637528.3671821",
+        "10.1145/3637528.3671814",
+        "10.1145/3637528.3671803",
+        "10.1145/3637528.3671817"
+      ]
+    },
+    {
+      "type": "stale_date",
+      "description": "Pushed 6 publication dates 900 days into the past.",
+      "affected_rows": 6,
+      "affected_paper_ids": [
+        "10.1145/3637528.3671823",
+        "10.1145/3637528.3671811",
+        "10.1145/3637528.3671821",
+        "10.1145/3637528.3671813",
+        "10.1145/3637528.3671805",
+        "10.1145/3637528.3671817"
+      ]
+    },
+    {
+      "type": "duplicate_rows",
+      "description": "Appended duplicated rows, breaking paper_id uniqueness.",
+      "affected_rows": 3,
+      "affected_paper_ids": [
+        "10.1145/3637528.3671824",
+        "10.1145/3637528.3671823",
+        "10.1145/3637528.3671822"
+      ]
+    }
+  ]
+}
