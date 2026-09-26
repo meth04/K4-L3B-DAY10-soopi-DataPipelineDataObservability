@@ -5,7 +5,7 @@
 | Thông tin         | Nội dung                  |
 | ------------------ | -------------------------- |
 | Họ và tên       | Nguyễn Văn Thân        |
-| MSSV               | `[MSSV]`                   |
+| MSSV               | 2A202602859                 |
 | Khóa/Lớp         | K4                        |
 | Tên nhóm         | soopi                     |
 | Vai trò chính    | Pipeline Integrator (orchestration & reproducibility) |

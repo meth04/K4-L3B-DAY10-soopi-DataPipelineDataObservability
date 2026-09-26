@@ -1,7 +1,7 @@
 # Danh Sách Thành Viên & Báo Cáo Phân Công Nhóm
 
 - **Tên Nhóm:** `soopi`
-- **Mã Nhóm / Lớp:** `K4-L3B-DAY10`
+- **Mã Nhóm / Lớp:** `K4-L3B-DAY10` (Khóa K4 — Lớp L3B)
 - **Tên Repository Nộp Bài:** `K4-L3B-DAY10-soopi-DataPipelineDataObservability`
 
 ---
@@ -10,18 +10,18 @@
 
 | STT | Họ và tên | MSSV | Email | Vai trò & Phân công công việc | Báo cáo cá nhân |
 |---:|---|---|---|---|---|
-| 1 | Nguyễn Văn Thân | `[MSSV]` | nguyenvanthan3001@gmail.com | Trưởng nhóm / Pipeline Integrator (`core/`, `phase1.py`, `corruption_flow.py`) | `report/[MSSV]_NguyenVanThan.md` |
-| 2 | `[Họ tên]` | `[MSSV]` | `[Email]` | Data Foundation & Recovery (`crossref.py`, `cleaning.py`, raw data) | `report/[MSSV]_HoTen.md` |
-| 3 | `[Họ tên]` | `[MSSV]` | `[Email]` | RAG & Vector Index (`retrieval/index.py`, `embeddings.py`, ChromaDB) | `report/[MSSV]_HoTen.md` |
-| 4 | `[Họ tên]` | `[MSSV]` | `[Email]` | Observability & Evaluation (`quality.py` GX 1.x, `testset.py`, reporting) | `report/[MSSV]_HoTen.md` |
+| 1 | Nguyễn Văn Thân | `2A202602859` | nguyenvanthan3001@gmail.com | Trưởng nhóm / Pipeline Integrator (`core/`, `phase1.py`, `corruption_flow.py`) | `report/2A202602859_NguyenVanThan.md` |
+| 2 | Dương Phương Hiểu | `2A202603008` | `[Email]` | Source & Data Foundation (`crossref.py`, `cleaning.py`, `data/raw/`) | `report/2A202603008_DuongPhuongHieu.md` |
+| 3 | Dương Hà Đức Anh | `2A202602977` | `[Email]` | RAG & Vector Index (`retrieval/index.py`, `embeddings.py`, ChromaDB) | `report/2A202602977_DuongHaDucAnh.md` |
+| 4 | Tạ Đăng Dương | `2A202603018` | `[Email]` | Observability & Evaluation (`quality.py` GX 1.x, `testset.py`, reporting) | `report/2A202603018_TaDangDuong.md` |
 
-*(Nhóm điền thêm họ tên, MSSV, email của các thành viên còn lại trước khi nộp.)*
+*(Email của thành viên 2–4 sẽ được bổ sung trước khi nộp. Phân công theo cấu hình 4 thành viên trong `report/README.md`.)*
 
 ---
 
 ## # Cá nhân
 
-### ## NguyenVanThan-`[MSSV]`
+### NguyenVanThan-2A202602859
 - **Vai trò:** Trưởng nhóm & Điều phối Pipeline.
 - **Công việc chi tiết đã hoàn thành:**
   - Thiết lập cấu hình hệ thống `core/config.py` và đường dẫn artifacts `core/utils.py`.
@@ -30,7 +30,7 @@
 - **Điều học được / Đóng góp chính:**
   - Hiểu sâu sắc về thiết kế Idempotent Pipeline và quản lý trạng thái luồng dữ liệu đa tầng.
 
-### ## HoVaTen2-`[MSSV]`
+### DuongPhuongHieu-2A202603008
 - **Vai trò:** Phụ trách Ingestion, Làm sạch & Phục hồi dữ liệu.
 - **Công việc chi tiết đã hoàn thành:**
   - Xây dựng module thu thập Crossref API với cơ chế Fallback offline trong `src/ingestion/crossref.py`.
@@ -39,7 +39,7 @@
 - **Điều học được / Đóng góp chính:**
   - Kỹ thuật truy vết nguồn gốc dữ liệu (Data Lineage) và bảo toàn raw snapshot trước khi biến đổi.
 
-### ## HoVaTen3-`[MSSV]`
+### DuongHaDucAnh-2A202602977
 - **Vai trò:** Phụ trách RAG, Vector Database & Embedding.
 - **Công việc chi tiết đã hoàn thành:**
   - Quản lý mô hình embedding `sentence-transformers/all-MiniLM-L6-v2`.
@@ -48,7 +48,7 @@
 - **Điều học được / Đóng góp chính:**
   - Cách cô lập các không gian vector để so sánh khách quan giữa dữ liệu sạch và dữ liệu bị lỗi.
 
-### ## HoVaTen4-`[MSSV]`
+### TaDangDuong-2A202603018
 - **Vai trò:** Phụ trách Data Observability & Benchmark Evaluation.
 - **Công việc chi tiết đã hoàn thành:**
   - Thiết lập Quality Gate theo chuẩn mới **Great Expectations 1.x** và giám sát Freshness SLA trong `src/observability/quality.py`.

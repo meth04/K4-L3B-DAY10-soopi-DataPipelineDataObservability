@@ -13,10 +13,10 @@
 
 | STT | Họ và tên | MSSV | Vai trò chính | Module/deliverable sở hữu |
 | --: | --- | --- | --- | --- |
-| 1 | Nguyễn Văn Thân | `[MSSV]` | Pipeline Integrator | `core/config.py`, `pipelines/phase1.py`, `pipelines/corruption_flow.py` |
-| 2 | `[Họ tên]` | `[MSSV]` | Source & Data Foundation | `ingestion/crossref.py`, `ingestion/cleaning.py`, `data/raw/` |
-| 3 | `[Họ tên]` | `[MSSV]` | RAG & Vector Index | `retrieval/index.py`, `retrieval/embeddings.py`, ChromaDB |
-| 4 | `[Họ tên]` | `[MSSV]` | Observability & Evaluation | `observability/quality.py`, `evaluation/testset.py`, `observability/reporting.py` |
+| 1 | Nguyễn Văn Thân | `2A202602859` | Pipeline Integrator | `core/config.py`, `pipelines/phase1.py`, `pipelines/corruption_flow.py` |
+| 2 | Dương Phương Hiểu | `2A202603008` | Source & Data Foundation | `ingestion/crossref.py`, `ingestion/cleaning.py`, `data/raw/` |
+| 3 | Dương Hà Đức Anh | `2A202602977` | RAG & Vector Index | `retrieval/index.py`, `retrieval/embeddings.py`, ChromaDB |
+| 4 | Tạ Đăng Dương | `2A202603018` | Observability & Evaluation | `observability/quality.py`, `evaluation/testset.py`, `observability/reporting.py` |
 
 ## 2. Tóm tắt kết quả
 
