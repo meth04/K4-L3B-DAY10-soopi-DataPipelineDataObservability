@@ -1,6 +1,6 @@
 {
   "report_name": "self_heal_verify_1",
-  "generated_at": "2026-09-26T04:19:13.681450+00:00",
+  "generated_at": "2026-09-26T05:03:00.886622+00:00",
   "row_count": 24,
   "engine": "great_expectations 1.x (ephemeral context)",
   "success": true,
@@ -38,7 +38,7 @@
   ],
   "failed_checks": [],
   "freshness": {
-    "generated_at": "2026-09-26T04:19:13.681903+00:00",
+    "generated_at": "2026-09-26T05:03:00.886947+00:00",
     "threshold_days": 180,
     "total_rows": 24,
     "stale_rows": 1,

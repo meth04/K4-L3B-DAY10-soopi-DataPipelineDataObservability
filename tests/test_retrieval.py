@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
+from pathlib import Path
 
 from core.config import load_settings
 from evaluation.metrics import _token_f1
@@ -58,6 +59,16 @@ def test_collection_name_derivation_is_stable():
         == settings.repaired_collection_name
     )
     assert LocalEmbeddingIndex._derive_collection_name(settings, None) == settings.baseline_collection_name
+
+
+def test_manifest_persist_path_is_portable_and_supports_legacy_paths():
+    settings = load_settings()
+    expected = settings.paths.chroma_dir.resolve()
+
+    assert LocalEmbeddingIndex._resolve_persist_path(settings, Path("data/chroma")) == expected
+    # Manifests created on another machine used an absolute path. When it is absent,
+    # loading should fall back to this project's local Chroma directory.
+    assert LocalEmbeddingIndex._resolve_persist_path(settings, Path("Z:/old-machine/chroma")) == expected
 
 
 def test_mock_llm_supports_tool_binding():

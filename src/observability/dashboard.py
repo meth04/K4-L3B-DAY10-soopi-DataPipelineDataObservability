@@ -78,6 +78,78 @@ def _freshness_section(freshness: dict | None) -> str:
     </section>"""
 
 
+def _age_distribution_section(settings) -> str:
+    """Render an offline, interactive age histogram for the three pipeline states."""
+    dataset_paths = {
+        "Baseline": settings.paths.clean_json,
+        "Corrupted": settings.paths.corrupted_clean_json,
+        "Repaired": settings.paths.repaired_clean_json,
+    }
+    age_data = {}
+    for label, path in dataset_paths.items():
+        records = _load(path, []) or []
+        age_data[label] = [
+            int(record["age_days"])
+            for record in records
+            if isinstance(record, dict) and record.get("age_days") is not None
+        ]
+    # Only numeric arrays are embedded in the script, so paper metadata cannot
+    # become executable markup or JavaScript.
+    encoded = json.dumps(age_data, separators=(",", ":"))
+    return f"""
+    <section>
+      <h2>Publication Age Distribution</h2>
+      <div class="card wide">
+        <div class="chart-controls">
+          <label for="age-dataset">Dataset</label>
+          <select id="age-dataset">
+            <option>Baseline</option><option>Corrupted</option><option>Repaired</option>
+          </select>
+          <label for="age-bins">Number of groups</label>
+          <select id="age-bins"><option value="5">5</option><option value="8" selected>8</option><option value="12">12</option></select>
+        </div>
+        <div id="age-histogram" class="histogram" role="img" aria-label="Distribution of paper age in days"></div>
+        <p id="age-summary" class="muted" aria-live="polite"></p>
+      </div>
+    </section>
+    <script>
+      const ageData = {encoded};
+      const datasetPicker = document.getElementById('age-dataset');
+      const binPicker = document.getElementById('age-bins');
+      function renderAgeHistogram() {{
+        const values = ageData[datasetPicker.value] || [];
+        const count = Number(binPicker.value);
+        const chart = document.getElementById('age-histogram');
+        const summary = document.getElementById('age-summary');
+        if (!values.length) {{
+          chart.innerHTML = '<p class="muted">No age data available for this dataset.</p>';
+          summary.textContent = '';
+          return;
+        }}
+        const min = Math.min(...values), max = Math.max(...values);
+        const width = Math.max(1, Math.ceil((max - min + 1) / count));
+        const bins = Array.from({{length: count}}, (_, i) => ({{start: min + i * width, count: 0}}));
+        values.forEach(age => {{
+          const index = Math.min(count - 1, Math.floor((age - min) / width));
+          bins[index].count++;
+        }});
+        const peak = Math.max(1, ...bins.map(bin => bin.count));
+        chart.innerHTML = bins.map(bin => {{
+          const end = bin.start + width - 1;
+          const height = Math.max(2, bin.count / peak * 100);
+          return `<div class="histogram-column" title="${{bin.count}} papers, ${{bin.start}}–${{end}} days">
+            <div class="histogram-bar" style="height:${{height}}%"></div>
+            <span>${{bin.start}}–${{end}}</span><b>${{bin.count}}</b></div>`;
+        }}).join('');
+        const mean = values.reduce((sum, value) => sum + value, 0) / values.length;
+        summary.textContent = `${{values.length}} papers · mean age ${{mean.toFixed(1)}} days · range ${{min}}–${{max}} days`;
+      }}
+      datasetPicker.addEventListener('change', renderAgeHistogram);
+      binPicker.addEventListener('change', renderAgeHistogram);
+      renderAgeHistogram();
+    </script>""".strip()
+
+
 def _quality_section(quality: dict | None, title: str) -> str:
     if not quality:
         return f"<section><h2>{title}</h2><p class='muted'>Artifact not found.</p></section>"
@@ -149,6 +221,7 @@ def build_dashboard(settings) -> Path:
     {_quality_section(baseline_quality, 'Baseline Quality Gate')}
     {_quality_section(corrupted_quality, 'Corrupted Quality Gate')}
     {_freshness_section(freshness)}
+    {_age_distribution_section(settings)}
     {_corruption_section(corruption_log)}
     {_healing_section(healing_log)}
     """
@@ -188,6 +261,17 @@ def build_dashboard(settings) -> Path:
   .pill.bad {{ background: rgba(239,68,68,.15); color: var(--bad); }}
   .row {{ display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }}
   .row span {{ color: var(--muted); }}
+  .chart-controls {{ display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }}
+  .chart-controls label {{ color: var(--muted); font-size: 13px; }}
+  .chart-controls select {{ color: var(--text); background: #0f172a; border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px 8px; margin-right: 14px; }}
+  .histogram {{ display: flex; align-items: end; gap: 8px; height: 210px; padding: 12px 4px 0;
+    border-bottom: 1px solid var(--border); }}
+  .histogram-column {{ flex: 1; height: 100%; min-width: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: end; gap: 3px; font-size: 11px; color: var(--muted); }}
+  .histogram-bar {{ width: min(100%, 42px); min-height: 2px; background: linear-gradient(180deg, #38bdf8, #2563eb);
+    border-radius: 4px 4px 0 0; }}
+  .histogram-column b {{ color: var(--text); font-weight: 500; }}
   .bar {{ height: 6px; background: #1e293b; border-radius: 999px; overflow: hidden; margin: 4px 0 8px; }}
   .bar span {{ display: block; height: 100%; }}
   .muted {{ color: var(--muted); }}
@@ -200,7 +284,7 @@ def build_dashboard(settings) -> Path:
   <h1>Data Pipeline Observability Dashboard</h1>
   <div class="sub">Crossref → clean → ChromaDB → evaluate → quality gate → corruption → repair</div>
   {body}
-  <footer>Static report generated from pipeline artifacts in <code>data/</code>. Regenerate with
+  <footer>Interactive dashboard generated from pipeline artifacts in <code>data/</code>. Regenerate with
   <code>python script/run_dashboard.py</code>.</footer>
 </main>
 </body>

@@ -1,6 +1,6 @@
 # Corruption & Repair — 3-State Comparison Report
 
-_Generated at 2026-09-26T04:19:14.591076+00:00_
+_Generated at 2026-09-26T05:03:16.735601+00:00_
 
 ## 1. Performance Comparison
 

@@ -1,6 +1,6 @@
 {
   "report_name": "repaired",
-  "generated_at": "2026-09-26T04:19:14.549711+00:00",
+  "generated_at": "2026-09-26T05:03:16.713812+00:00",
   "row_count": 24,
   "engine": "great_expectations 1.x (ephemeral context)",
   "success": true,
@@ -38,7 +38,7 @@
   ],
   "failed_checks": [],
   "freshness": {
-    "generated_at": "2026-09-26T04:19:14.550384+00:00",
+    "generated_at": "2026-09-26T05:03:16.714122+00:00",
     "threshold_days": 180,
     "total_rows": 24,
     "stale_rows": 1,

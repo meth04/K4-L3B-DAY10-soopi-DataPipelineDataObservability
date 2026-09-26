@@ -80,6 +80,21 @@ class LocalEmbeddingIndex:
             return name_map[resolved_path]
         return safe_slug(embeddings_output_path.stem)
 
+    @staticmethod
+    def _resolve_persist_path(settings: Settings, persist_path: str | Path) -> Path:
+        """Resolve a manifest path, including old absolute paths from another machine."""
+        path = Path(persist_path)
+        if not path.is_absolute():
+            path = settings.paths.project_dir / path
+        elif not path.exists() and settings.paths.chroma_dir.exists():
+            # Older manifests stored the creator's absolute path. Use this project's
+            # Chroma directory when that machine-specific location is unavailable.
+            path = settings.paths.chroma_dir
+        path = path.resolve()
+        if not path.exists():
+            raise FileNotFoundError(f"ChromaDB persistence directory not found: {path}")
+        return path
+
     @classmethod
     def build(
         cls,
@@ -111,12 +126,13 @@ class LocalEmbeddingIndex:
         )
 
         manifest_path = embeddings_output_path or settings.paths.embeddings_json
+        manifest_persist_path = persist_path.relative_to(settings.paths.project_dir).as_posix()
         write_json(
             manifest_path,
             {
                 "backend": "chroma",
                 "embedding_model": settings.embedding_model,
-                "persist_path": str(persist_path),
+                "persist_path": manifest_persist_path,
                 "collection_name": collection_name,
                 "documents": documents,
             },
@@ -135,7 +151,7 @@ class LocalEmbeddingIndex:
             settings=settings,
             collection_name=payload["collection_name"],
             documents=payload["documents"],
-            persist_path=Path(payload["persist_path"]),
+            persist_path=cls._resolve_persist_path(settings, payload["persist_path"]),
         )
 
     def search(self, query: str, top_k: int | None = None) -> list[SearchResult]:
